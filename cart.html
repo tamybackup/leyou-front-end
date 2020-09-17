@@ -277,10 +277,7 @@
                 ly.http.get("/cart").then(({data}) => {
                     this.carts = data;
                     this.selected = this.carts;
-                }).catch(() => {
-
-                    console.log("获取失败")
-                })
+                });
             }).catch(() => {
                 //未登录购物车查询
                 this.carts = ly.store.get("LY_CART");
@@ -308,7 +305,7 @@
             incr(cart) {
                 cart.num++;
                 ly.verify().then(res => {
-
+                    ly.http.put("/cart", {skuId: cart.skuId, num: cart.num});
                 }).catch(() => {
                     //未登录购物车查询
                     ly.store.set("LY_CART", this.carts);
@@ -319,7 +316,7 @@
                     cart.num--;
                 }
                 ly.verify().then(res => {
-
+                    ly.http.put("/cart", {skuId: cart.skuId, num: cart.num});
                 }).catch(() => {
                     //未登录购物车查询
                     ly.store.set("LY_CART", this.carts);
